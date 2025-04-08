@@ -2,10 +2,24 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
-import { Button } from "@mui/material";
 
 function App() {
-  const [count, setCount] = useState(0);
+  type Vehicle = {
+    id: string;
+    name?: string; // name is optional because one item in your list doesn't have it
+  };
+
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+
+  const fetchVehicles = async () => {
+    try {
+      const res = await fetch("http://localhost:1337/vehicle/list");
+      const data = await res.json();
+      setVehicles(data.vehicles);
+    } catch (error) {
+      console.error("Failed to fetch vehicles:", error);
+    }
+  };
 
   return (
     <>
@@ -18,21 +32,19 @@ function App() {
         </a>
       </div>
       <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      <div>
-        <Button variant="contained" color="primary">
-          Hello MUI
-        </Button>
+      <div style={{ padding: "1rem" }}>
+        <button onClick={fetchVehicles}>Load Vehicles</button>
+
+        <div style={{ marginTop: "1rem" }}>
+          {vehicles.length === 0 && <p>No vehicles loaded.</p>}
+          <ul>
+            {vehicles.map((v) => (
+              <li key={v.id}>
+                {v.name || "(Unnamed Vehicle)"} — {v.id}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </>
   );
