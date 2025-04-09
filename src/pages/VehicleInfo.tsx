@@ -23,8 +23,8 @@ const VehicleInfo: React.FC<Props> = ({ vehicleServices }) => {
 
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  /*   const [timedOut, setTimedOut] = useState(false); */
-
+  /*   const [timedOut, setTimedOut] = useState(false);
+   */
   useEffect(() => {
     if (!vehicleName && id) {
       const storedName = localStorage.getItem(`vehicleName-${id}`);
@@ -116,7 +116,7 @@ const VehicleInfo: React.FC<Props> = ({ vehicleServices }) => {
             </div>
           ))}
         </Card>
-        {vehicleServices[id!] && vehicleServices.status && (
+        {vehicleServices[id!] && vehicleServices[id!].services && (
           <VehicleServicesList
             data={vehicleServices[id!]}
             vehicleId={id!}
