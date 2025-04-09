@@ -1,14 +1,15 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 
-function App() {
-  type Vehicle = {
-    id: string;
-    name?: string; // name is optional because one item in your list doesn't have it
-  };
+import { useState, useEffect } from "react";
+import { Vehicle } from "./types/types";
+import { Route, Routes } from "react-router";
 
+import VehicleInfo from "./pages/VehicleInfo";
+import ServiceInfo from "./pages/ServiceInfo";
+import Header from "./components/Header";
+import VehicleList from "./components/VehicleList";
+
+function App() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
 
   const fetchVehicles = async () => {
@@ -21,30 +22,24 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    fetchVehicles();
+  }, []);
+
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div style={{ padding: "1rem" }}>
-        <button onClick={fetchVehicles}>Load Vehicles</button>
-
-        <div style={{ marginTop: "1rem" }}>
-          {vehicles.length === 0 && <p>No vehicles loaded.</p>}
-          <ul>
-            {vehicles.map((v) => (
-              <li key={v.id}>
-                {v.name || "(Unnamed Vehicle)"} — {v.id}
-              </li>
-            ))}
-          </ul>
-        </div>
+      <Header />
+      <div style={{ paddingTop: "6em", padding: "1rem" }}>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <VehicleList vehicles={vehicles} onRefresh={fetchVehicles} />
+            }
+          />
+          <Route path="/vehicle/:id" element={<VehicleInfo />} />
+          <Route path="/vehicle/:id/services" element={<ServiceInfo />} />
+        </Routes>
       </div>
     </>
   );
