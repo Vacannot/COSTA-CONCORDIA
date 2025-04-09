@@ -2,7 +2,7 @@ import VovloLogo from "../assets/VovloLogo.svg";
 import VolvoIronMark from "../assets/VolvoIronMark.svg";
 
 import { useNavigate } from "react-router-dom";
-import { useMediaQuery } from "@mui/material";
+import { Button, useMediaQuery } from "@mui/material";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -64,7 +64,7 @@ const Header = () => {
           whiteSpace: "nowrap",
         }}
       >
-        {isSmallScreen ? "VGCS" : "Volvo Group Connected Solutions"}
+        {isSmallScreen ? "VGCS" : "Vovlo Group Connected Solutions"}
       </div>
 
       <div
@@ -72,7 +72,11 @@ const Header = () => {
           flex: 1,
           marginRight: "3rem",
         }}
-      ></div>
+      >
+        <Button variant="outlined" onClick={() => localStorage.clear()}>
+          Clear Cache
+        </Button>
+      </div>
     </div>
   );
 };
