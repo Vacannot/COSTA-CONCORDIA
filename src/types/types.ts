@@ -15,13 +15,26 @@ export type VehicleInformation = {
 };
 
 export type VehicleServiceStatus = {
-  communicationStatus: "ACTIVE" | "INACTIVE";
+  communicationStatus: CommunicationStatus;
   services: Service[];
 };
 
+export enum CommunicationStatus {
+  Active = "ACTIVE",
+  Deactivated = "DEACTIVATED",
+  Unknown = "UNKNOWN",
+  Error = "ERROR",
+}
+
 export type Service = {
   serviceName: string;
-  status: "ACTIVE" | "DEACTIVATED" | "ERROR";
+  status: ServiceStatus;
   lastUpdate: string;
   reason?: string;
 };
+
+export enum ServiceStatus {
+  Active = "ACTIVE",
+  Deactivated = "DEACTIVATED",
+  Error = "ERROR",
+}

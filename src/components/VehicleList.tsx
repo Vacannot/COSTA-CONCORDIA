@@ -25,21 +25,36 @@ const VehicleList: React.FC<Props> = ({ vehicles, fetchServices }) => {
       <Box
         sx={{
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "center",
           alignItems: "center",
           marginBottom: 3,
         }}
       >
-        <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+        <Typography
+          variant="h5"
+          sx={{ fontWeight: "bold", fontFamily: "VolvoNovumMedium" }}
+        >
           Vehicle List
         </Typography>
       </Box>
 
-      <Box sx={{ gap: 2 }}>
+      <Box
+        sx={{
+          gap: 2,
+          maxHeight: 800,
+          overflow: "hidden",
+          width: 600,
+          padding: 3,
+          display: "flex",
+          flexDirection: "column",
+          overflowY: "auto",
+        }}
+      >
         {vehicles.map((v) => (
           <Card
             sx={{
               height: "100%",
+              minHeight: 200,
               transition: "all 0.2s ease-in-out",
               "&:hover": {
                 backgroundColor: "#f5f5f5",
@@ -57,7 +72,7 @@ const VehicleList: React.FC<Props> = ({ vehicles, fetchServices }) => {
                 ID: {v.id}
               </Typography>
 
-              <Stack direction="row" spacing={1} mt={2}>
+              <Stack direction="column" spacing={1} mt={2}>
                 <Button
                   variant="contained"
                   size="small"
@@ -67,6 +82,7 @@ const VehicleList: React.FC<Props> = ({ vehicles, fetchServices }) => {
                   onClick={() =>
                     localStorage.setItem(`vehicleName-${v.id}`, v.name ?? "")
                   }
+                  sx={{ maxWidth: "10rem" }}
                 >
                   Overview
                 </Button>
@@ -76,6 +92,7 @@ const VehicleList: React.FC<Props> = ({ vehicles, fetchServices }) => {
                   size="small"
                   component={Link}
                   to={`/vehicle/${v.id}/services`}
+                  sx={{ maxWidth: "10rem" }}
                 >
                   Services
                 </Button>

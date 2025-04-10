@@ -50,7 +50,6 @@ const VehicleInfo: React.FC<Props> = ({ vehicleServices }) => {
         }
 
         const data = await res.json();
-        console.log(data);
         setVehicleInformation(data);
       } catch (error: unknown) {
         if (error instanceof Error) {
@@ -116,13 +115,11 @@ const VehicleInfo: React.FC<Props> = ({ vehicleServices }) => {
             </div>
           ))}
         </Card>
-        {vehicleServices[id!] && vehicleServices[id!].services && (
-          <VehicleServicesList
-            data={vehicleServices[id!]}
-            vehicleId={id!}
-            filterActiveOnly={true}
-          />
-        )}
+        <VehicleServicesList
+          data={vehicleServices[id!]}
+          vehicleId={id!}
+          filterActiveOnly={true}
+        />
       </div>
     </>
   );

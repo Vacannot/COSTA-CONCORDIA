@@ -1,5 +1,5 @@
 import { Card } from "@mui/material";
-import { VehicleServiceStatus } from "../types/types";
+import { CommunicationStatus, VehicleServiceStatus } from "../types/types";
 import { useEffect, useState } from "react";
 
 type Props = {
@@ -35,6 +35,24 @@ const VehicleServicesList: React.FC<Props> = ({
     return (
       <Card sx={{ padding: 3, flex: 2, minWidth: 300 }}>
         <div>Loading services...</div>
+      </Card>
+    );
+  }
+
+  if (data.communicationStatus === CommunicationStatus.Deactivated) {
+    return (
+      <Card sx={{ padding: 3, flex: 2, minWidth: 300 }}>
+        <div>
+          Communication Status for this vehicle's services is Deactivated
+        </div>
+      </Card>
+    );
+  }
+
+  if (data.communicationStatus === CommunicationStatus.Unknown) {
+    return (
+      <Card sx={{ padding: 3, flex: 2, minWidth: 300 }}>
+        <div>Communication Status for this vehicles services is Unknown</div>
       </Card>
     );
   }
