@@ -1,5 +1,9 @@
 import {
   Card,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
   Table,
   TableBody,
   TableCell,
@@ -7,7 +11,11 @@ import {
   TableRow,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { CommunicationStatus, VehicleServiceStatus } from "../types/types";
+import {
+  CommunicationStatus,
+  ServiceStatus,
+  VehicleServiceStatus,
+} from "../types/types";
 import { fetchServices } from "../utils/fetchServices";
 
 type Props = {
@@ -22,6 +30,7 @@ const VehicleServicesList: React.FC<Props> = ({
   const [data, setData] = useState<VehicleServiceStatus | undefined>();
   const [timedOut, setTimedOut] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [statusFilter, setStatusFilter] = useState<string | null>(null);
 
   useEffect(() => {
     let didTimeout = false;
@@ -113,9 +122,11 @@ const VehicleServicesList: React.FC<Props> = ({
     );
   }
 
-  const services = filterActiveOnly
-    ? data?.services.filter((s) => s.status === "ACTIVE")
-    : data?.services ?? [];
+  const services = (data?.services ?? []).filter((s) => {
+    if (filterActiveOnly) return s.status === "ACTIVE";
+    if (statusFilter) return s.status === statusFilter;
+    return true;
+  });
 
   return (
     <Card sx={{ padding: 3, flex: 2, minWidth: 300, maxWidth: 400 }}>
@@ -124,6 +135,24 @@ const VehicleServicesList: React.FC<Props> = ({
         <strong>Communication Status:</strong>{" "}
         {data?.communicationStatus || "Unavailable"}
       </div>
+
+      {filterActiveOnly ? (
+        <></>
+      ) : (
+        <FormControl fullWidth sx={{ marginBottom: 2 }}>
+          <InputLabel>Status Filter</InputLabel>
+          <Select
+            value={statusFilter || ""}
+            label="Status Filter"
+            onChange={(e) => setStatusFilter(e.target.value || null)}
+          >
+            <MenuItem value="">All</MenuItem>
+            <MenuItem value={ServiceStatus.Active}>Active</MenuItem>
+            <MenuItem value={ServiceStatus.Deactivated}>Deactivated</MenuItem>
+            <MenuItem value={ServiceStatus.Error}>Error</MenuItem>
+          </Select>
+        </FormControl>
+      )}
 
       <div
         style={{
