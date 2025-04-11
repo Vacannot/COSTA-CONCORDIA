@@ -13,7 +13,8 @@ const BreadcrumbsNav: React.FC = () => {
         marginTop: "6rem",
         width: "100%",
         padding: "0.5rem 2rem",
-        position: "absolute",
+        position: "fixed",
+        zIndex: 90,
       }}
     >
       <Breadcrumbs>
