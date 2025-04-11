@@ -1,8 +1,8 @@
-import VovloLogo from "../assets/VovloLogo.svg";
 import VolvoIronMark from "../assets/VolvoIronMark.svg";
+import VovloLogo from "../assets/VovloLogo.svg";
 
-import { useNavigate } from "react-router-dom";
 import { Button, useMediaQuery } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -73,7 +73,13 @@ const Header = () => {
           marginRight: "3rem",
         }}
       >
-        <Button variant="outlined" onClick={() => localStorage.clear()}>
+        <Button
+          variant="outlined"
+          onClick={() => {
+            localStorage.clear();
+            window.location.reload();
+          }}
+        >
           Clear Cache
         </Button>
       </div>
