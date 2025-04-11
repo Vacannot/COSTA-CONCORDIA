@@ -6,13 +6,18 @@ export type Vehicle = {
 export type VehicleInformation = {
   id: string;
   msidn: string;
-  engineStatus: "OK" | "DANGER";
+  engineStatus: engineStatus;
   fleet: string;
   brand: number;
   countryOfOperation: string;
   chassiNumber: string;
   cassiSeries: string;
 };
+
+export enum engineStatus {
+  Ok = "OK",
+  Danger = "DANGER",
+}
 
 export type VehicleServiceStatus = {
   communicationStatus: CommunicationStatus;
@@ -26,13 +31,12 @@ export enum CommunicationStatus {
   Error = "ERROR",
 }
 
-export type Service = {
+export interface Service {
   serviceName: string;
   status: ServiceStatus;
   lastUpdate: string;
   reason?: string;
-};
-
+}
 export enum ServiceStatus {
   Active = "ACTIVE",
   Deactivated = "DEACTIVATED",
