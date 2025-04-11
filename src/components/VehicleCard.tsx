@@ -41,10 +41,34 @@ const VehicleCard: React.FC<Props> = ({ vehicle }) => {
       }}
     >
       <CardContent>
-        <div style={{ display: "flex", flexDirection: "row", gap: "4rem" }}>
-          <LocalShippingIcon fontSize="large" />
-
-          <div style={{ flexDirection: "column", textAlign: "left" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "1rem",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "3rem",
+              height: "100%",
+              paddingRight: "1rem",
+            }}
+          >
+            <LocalShippingIcon fontSize="large" />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              textAlign: "left",
+            }}
+          >
             <Typography variant="h6" gutterBottom>
               {vehicle.name?.toUpperCase() || "(Unnamed Vehicle)"}
             </Typography>
@@ -53,7 +77,13 @@ const VehicleCard: React.FC<Props> = ({ vehicle }) => {
             </Typography>
           </div>
         </div>
-        <CardActions>
+        <CardActions
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
           <Button
             variant="contained"
             size="medium"
