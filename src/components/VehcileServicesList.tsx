@@ -11,12 +11,9 @@ import {
   TableRow,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import {
-  CommunicationStatus,
-  ServiceStatus,
-  VehicleServiceStatus,
-} from "../types/types";
+import { ServiceStatus, VehicleServiceStatus } from "../types/types";
 import { fetchServices } from "../utils/fetchServices";
+import VehicleServicesFallback from "./VehicleServicesFallback";
 
 type Props = {
   vehicleId?: string;
@@ -66,59 +63,15 @@ const VehicleServicesList: React.FC<Props> = ({
     }
   }, [vehicleId, data, errorMsg]);
 
-  if (errorMsg) {
+  if (!data || errorMsg || timedOut || !vehicleId) {
     return (
-      <Card sx={{ padding: 3, flex: 2, minWidth: 300, maxWidth: 400 }}>
-        <h2>Services</h2>
-        <Card sx={{ padding: 3 }}>
-          <p style={{ color: "red" }}>{errorMsg}</p>
-        </Card>
-      </Card>
-    );
-  }
-
-  if (timedOut) {
-    return (
-      <Card sx={{ padding: 3, flex: 2, minWidth: 300, maxWidth: 400 }}>
-        <h2>Services</h2>
-        <Card sx={{ padding: 3 }}>⏰ Timed out. Could not load services.</Card>
-      </Card>
-    );
-  }
-
-  if (!data) {
-    return (
-      <Card sx={{ padding: 3, flex: 2, minWidth: 300, maxWidth: 400 }}>
-        <h2>Services</h2>
-        <Card sx={{ padding: 3 }}>Loading services...</Card>
-      </Card>
-    );
-  }
-
-  if (data.communicationStatus === CommunicationStatus.Deactivated) {
-    return (
-      <Card sx={{ padding: 3, flex: 2, minWidth: 300, maxWidth: 400 }}>
-        <h2>Services</h2>
-        <Card sx={{ padding: 3 }}>
-          Communication Status for this vehicle's services is Deactivated
-        </Card>
-      </Card>
-    );
-  }
-
-  if (data.communicationStatus === CommunicationStatus.Unknown) {
-    return (
-      <Card sx={{ padding: 3, flex: 2, minWidth: 300, maxWidth: 400 }}>
-        <div>Communication Status for this vehicles services is Unknown</div>
-      </Card>
-    );
-  }
-
-  if (!vehicleId) {
-    return (
-      <Card sx={{ padding: 3, flex: 2, minWidth: 300, maxWidth: 400 }}>
-        <div>🚫 No vehicle ID provided.</div>
-      </Card>
+      <VehicleServicesFallback
+        errorMsg={errorMsg}
+        timedOut={timedOut}
+        isLoading={!data && !errorMsg && !timedOut}
+        communicationStatus={data?.communicationStatus}
+        vehicleId={vehicleId}
+      />
     );
   }
 
@@ -136,9 +89,7 @@ const VehicleServicesList: React.FC<Props> = ({
         {data?.communicationStatus || "Unavailable"}
       </div>
 
-      {filterActiveOnly ? (
-        <></>
-      ) : (
+      {!filterActiveOnly && (
         <FormControl fullWidth sx={{ marginBottom: 2 }}>
           <InputLabel>Status Filter</InputLabel>
           <Select
