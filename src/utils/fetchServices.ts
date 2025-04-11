@@ -22,7 +22,7 @@ export const fetchServices = async (
     );
   }
 
-  const data = await res.json();
+  const data: VehicleServiceStatus = await res.json();
   localStorage.setItem(`services-${id}`, JSON.stringify(data));
   return data;
 };

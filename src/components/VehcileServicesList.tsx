@@ -71,7 +71,8 @@ const VehicleServicesList: React.FC<Props> = ({
   if (timedOut) {
     return (
       <Card sx={{ padding: 3, flex: 2, minWidth: 300, maxWidth: 400 }}>
-        <div>⏰ Timed out. Could not load services.</div>
+        <h2>Services</h2>
+        <Card sx={{ padding: 3 }}>⏰ Timed out. Could not load services.</Card>
       </Card>
     );
   }
@@ -79,7 +80,8 @@ const VehicleServicesList: React.FC<Props> = ({
   if (!data) {
     return (
       <Card sx={{ padding: 3, flex: 2, minWidth: 300, maxWidth: 400 }}>
-        <div>Loading services...</div>
+        <h2>Services</h2>
+        <Card sx={{ padding: 3 }}>Loading services...</Card>
       </Card>
     );
   }
@@ -87,9 +89,10 @@ const VehicleServicesList: React.FC<Props> = ({
   if (data.communicationStatus === CommunicationStatus.Deactivated) {
     return (
       <Card sx={{ padding: 3, flex: 2, minWidth: 300, maxWidth: 400 }}>
-        <div>
+        <h2>Services</h2>
+        <Card sx={{ padding: 3 }}>
           Communication Status for this vehicle's services is Deactivated
-        </div>
+        </Card>
       </Card>
     );
   }

@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 
 const BreadcrumbsNav: React.FC = () => {
   const location = useLocation();
-  const pathnames = location.pathname.split("/").filter((x) => x);
+  const pathnames = location.pathname.split("/").filter(Boolean);
 
   return (
     <Box
@@ -16,8 +16,8 @@ const BreadcrumbsNav: React.FC = () => {
         position: "absolute",
       }}
     >
-      <Breadcrumbs aria-label="breadcrumb">
-        <MuiLink underline="hover" color="inherit" component={Link} to="/">
+      <Breadcrumbs>
+        <MuiLink underline="hover" color="grey" component={Link} to="/">
           Home
         </MuiLink>
         {pathnames.map((value, index) => {
@@ -31,7 +31,7 @@ const BreadcrumbsNav: React.FC = () => {
           ) : (
             <MuiLink
               underline="hover"
-              color="inherit"
+              color="grey"
               component={Link}
               to={to}
               key={to}
